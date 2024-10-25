@@ -26,11 +26,21 @@ func testConvertStringToTypeCode() {
     #expect("no!😱".hfsTypeCode == nil)
 }
 
-@Test("Create String from Mac OS Roman C String")
-func testCreateStringFromMacOSRoman() {
+@Test("Create String from Mac OS Roman String Data")
+func testCreateStringFromMacOSRomanStringData() {
     #expect(String(macOSRomanData: []) == "")
     #expect(String(macOSRomanData: [0x46, 0x6f, 0x6f, 0x20, 0x42, 0x61, 0x72]) == "Foo Bar")
     #expect(String(macOSRomanData: [0xd2, 0xa4, 0xd8, 0xb5, 0x62, 0x97, 0xa3, 0xa7, 0xd3]) == "“§ÿµbó£ß”")
+}
+
+@Test("Create String from Mac OS Roman C String Data")
+func testCreateStringFromMacOSRomanCString() {
+    #expect(String(macOSRomanCStringData: []) == "")
+    #expect(String(macOSRomanCStringData: [0, 0, 0]) == "")
+    #expect(String(macOSRomanCStringData: [0x46, 0x6f, 0x6f, 0x20, 0x42, 0x61, 0x72]) == "Foo Bar")
+    #expect(String(macOSRomanCStringData: [0x46, 0x6f, 0x6f, 0x20, 0x42, 0x61, 0x72, 0x00, 0x00]) == "Foo Bar")
+    #expect(String(macOSRomanCStringData: [0xd2, 0xa4, 0xd8, 0xb5, 0x62, 0x97, 0xa3, 0xa7, 0xd3]) == "“§ÿµbó£ß”")
+    #expect(String(macOSRomanCStringData: [0xd2, 0xa4, 0xd8, 0xb5, 0x62, 0x97, 0xa3, 0xa7, 0xd3, 0x00]) == "“§ÿµbó£ß”")
 }
 
 @Test("Convert String to Mac OS Roman C String")

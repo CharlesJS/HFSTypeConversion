@@ -46,6 +46,11 @@ extension String {
         self = String(macOSRomanData.map { Self.convertToMacOSRoman($0) })
     }
 
+    public init(macOSRomanCStringData: some Collection<UInt8>) {
+        let terminatorIndex = macOSRomanCStringData.firstIndex(of: 0) ?? macOSRomanCStringData.endIndex
+        self.init(macOSRomanData: macOSRomanCStringData[..<terminatorIndex])
+    }
+
     public func macOSRomanCString(allowLossyConversion: Bool = false) -> ContiguousArray<UInt8>? {
         var bytes: ContiguousArray<UInt8> = []
 
