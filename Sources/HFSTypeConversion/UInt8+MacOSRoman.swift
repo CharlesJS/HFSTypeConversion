@@ -1,0 +1,46 @@
+//
+//  UInt8+MacOSRoman.swift
+//  HFSTypeConversion
+//
+//  Created by Charles Srstka on 12/18/24.
+//
+
+extension UInt8 {
+    public func toMacOSRomanLowerCase() -> UInt8 {
+        switch self {
+        case 0x41...0x5a: // A-Z
+            self + 0x20
+        case 0x80: 0x8a // "Ä"
+        case 0x81: 0x8c // "Å"
+        case 0x82: 0x8d // "Ç"
+        case 0x83: 0x8e // "É"
+        case 0x84: 0x96 // "Ñ"
+        case 0x85: 0x9a // "Ö"
+        case 0x86: 0x9f // "Ü"
+        case 0xae: 0xbe // "Æ"
+        case 0xaf: 0xbf // "Ø"
+        case 0xcb: 0x88 // "À"
+        case 0xcc: 0x8b // "Ã"
+        case 0xcd: 0x9b // "Õ"
+        case 0xce: 0xcf // "Œ"
+        case 0xd9: 0xd8 // "Ÿ"
+        case 0xe5: 0x89 // "Â"
+        case 0xe6: 0x90 // "Ê"
+        case 0xe7: 0x87 // "Á"
+        case 0xe8: 0x91 // "Ë"
+        case 0xe9: 0x8f // "È"
+        case 0xea: 0x92 // "Í"
+        case 0xeb: 0x94 // "Î"
+        case 0xec: 0x95 // "Ï"
+        case 0xed: 0x93 // "Ì",
+        case 0xee: 0x97 // "Ó"
+        case 0xef: 0x99 // "Ô"
+        case 0xf1: 0x98 // "Ò"
+        case 0xf2: 0x9c // "Ú"
+        case 0xf3: 0x9e // "Û"
+        case 0xf4: 0x9d // "Ù"
+        default:
+            self
+        }
+    }
+}

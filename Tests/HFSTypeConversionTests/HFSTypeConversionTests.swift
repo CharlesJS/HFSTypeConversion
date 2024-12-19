@@ -5,6 +5,7 @@
 //  Created by Charles Srstka on 9/5/24.
 //
 
+import Foundation
 import HFSTypeConversion
 import Testing
 
@@ -49,10 +50,19 @@ func testConvertStringToMacOSRomanCString() {
     #expect(String("").macOSRomanCString(allowLossyConversion: false) == [])
     #expect(String("Moof!").macOSRomanCString(allowLossyConversion: true) == [0x4d, 0x6f, 0x6f, 0x66, 0x21])
     #expect(String("Moof!").macOSRomanCString(allowLossyConversion: false) == [0x4d, 0x6f, 0x6f, 0x66, 0x21])
-    #expect(String("π°◊‰√").macOSRomanCString(allowLossyConversion: true) == [0xb9, 0xa1, 0xd7, 0xf0, 0xe4, 0xc3])
+    #expect(String("π°◊‰√Ω").macOSRomanCString(allowLossyConversion: true) == [0xb9, 0xa1, 0xd7, 0xf0, 0xe4, 0xc3, 0xbd])
     #expect(String("Some 😈bad😈 characters").macOSRomanCString(allowLossyConversion: false) == nil)
     #expect(
         String("Some 😈bad😈 characters").macOSRomanCString(allowLossyConversion: true) ==
         String("Some bad characters").macOSRomanCString(allowLossyConversion: false)
     )
+}
+
+@Test("Case conversion")
+func testCaseConversion() {
+    for c in UInt8.min..<UInt8.max {
+        if let expectedChar = String(bytes: [c], encoding: .macOSRoman)?.lowercased().data(using: .macOSRoman)?.first {
+            #expect(c.toMacOSRomanLowerCase() == expectedChar)
+        }
+    }
 }
